@@ -11,13 +11,13 @@
  */
 blockchain_t *blockchain_create(void)
 {
-	blockchain_t *chaine = calloc(1, sizeof(*chain));
+	blockchain_t *chain = calloc(1, sizeof(*chain));
 	block_t *block = calloc(1, sizeof(*block));
-	llist_t *liste = llist_create(MT_SUPPORT_TRUE);
+	llist_t *list = llist_create(MT_SUPPORT_TRUE);
 
-	if (!chaine || !block || !liste)
+	if (!chain || !block || !list)
 	{
-		free(chaine), free(block), llist_destroy(liste, 1, NULL);
+		free(chain), free(block), llist_destroy(list, 1, NULL);
 		return (NULL);
 	}
 
@@ -26,11 +26,11 @@ blockchain_t *blockchain_create(void)
 	block->data.len = GENESIS_DATA_LEN;
 	memcpy(&(block->hash), GENESIS_HASH, SHA256_DIGEST_LENGTH);
 
-	if (llist_add_node(liste, block, ADD_NODE_FRONT))
+	if (llist_add_node(list, block, ADD_NODE_FRONT))
 	{
-		free(chaine), free(block), llist_destroy(liste, 1, NULL);
+		free(chain), free(block), llist_destroy(list, 1, NULL);
 		return (NULL);
 	}
-	chaine->chaine = liste;
-	return (chaine);
+	chain->chain = list;
+	return (chain);
 }
